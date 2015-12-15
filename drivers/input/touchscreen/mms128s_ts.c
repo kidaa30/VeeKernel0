@@ -1184,44 +1184,32 @@ static void mcs8000_work(struct work_struct *work)
 				#endif
 				/* 2012-10-08 JongWook-Park(blood9874@lge.com) [V3] Melfas mms-128s TSD patch [END] */
 
-				#if defined(CONFIG_MACH_MSM7X25A_V3_DS)
-				/* 2012-09-25 JongWook-Park(blood9874@lge.com) [V3] Bring up V3 mms-128s touch [START] */ 
 				switch(keyID)
 				{
 					case 0x1:
 						input_report_key(ts->input_dev, KEY_BACK, touchState ? PRESS_KEY : RELEASE_KEY);
 						break;
+#ifdef CONFIG_MACH_MSM7X25A_V3_DS
 					case 0x2:
-						input_report_key(ts->input_dev, KEY_HOMEPAGE/*KEY_HOME*/, touchState ? PRESS_KEY : RELEASE_KEY);
+						input_report_key(ts->input_dev, KEY_HOMEPAGE, touchState ? PRESS_KEY : RELEASE_KEY);
 						break;
 					case 0x3:
 						input_report_key(ts->input_dev, KEY_MENU, touchState ? PRESS_KEY : RELEASE_KEY);
 						break;
+#else
+					case 0x2:
+						input_report_key(ts->input_dev, KEY_MENU, touchState ? PRESS_KEY : RELEASE_KEY);
+						break;
+					case 0x3:
+						input_report_key(ts->input_dev, KEY_HOMEPAGE, touchState ? PRESS_KEY : RELEASE_KEY);
+						break;
+#endif
 					case 0x4:
 						input_report_key(ts->input_dev, KEY_SIM_SWITCH, touchState ? PRESS_KEY : RELEASE_KEY);
 						break;
 					default:
-						//make exception to debug
-						//or printk msg
 						break;					
 				}
-				/* 2012-09-25 JongWook-Park(blood9874@lge.com) [V3] Bring up V3 mms-128s touch [END] */ 
-				#else
-				/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single Touch Bring Up [START] */ 
-				#if 0
-				if (keyID == 0x1)
-					input_report_key(ts->input_dev, KEY_MENU, touchState ? PRESS_KEY : RELEASE_KEY);
-				if (keyID == 0x2)
-					input_report_key(ts->input_dev, KEY_BACK, touchState ? PRESS_KEY : RELEASE_KEY);
-				#else
-				if (keyID == 0x1)
-					input_report_key(ts->input_dev, KEY_BACK, touchState ? PRESS_KEY : RELEASE_KEY);
-				if (keyID == 0x2)
-					input_report_key(ts->input_dev, KEY_MENU, touchState ? PRESS_KEY : RELEASE_KEY);
-				#endif
-				/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single Touch Bring Up [END] */ 
-				#endif
-				/* LGE_CHANGE_E: E1 yongboem.kim@lge.com [2012-01-10] : for Rev.A Touch Key */
 			}
 		}
 
@@ -1981,37 +1969,17 @@ static int __devinit mcs8000_ts_init(void)
 
 	mcs8000_ts_input->name = "touch_mcs8000";
 
-/* 2012-09-25 JongWook-Park(blood9874@lge.com) [V3] Bring up V3 mms-128s touch [START] */ 
-    set_bit(EV_ABS, mcs8000_ts_input->evbit);
-    set_bit(EV_KEY, mcs8000_ts_input->evbit);
-    /*set_bit(BTN_TOUCH, ts->input_dev->keybit); */
-    /* LGE_CHANGE_S : add touch device propbit
-     * 2012-01-17, mystery184.kim@lge.com
-     * not initialize propbit 
-     */
-    set_bit(INPUT_PROP_DIRECT, mcs8000_ts_input->propbit);
-    /* LGE_CHANGE_E : add touch device propbit */ 
-    mcs8000_ts_input->evbit[0] = BIT_MASK(EV_ABS) | BIT_MASK(EV_KEY);
+	set_bit(EV_ABS, mcs8000_ts_input->evbit);
+	set_bit(EV_KEY, mcs8000_ts_input->evbit);
 
-	/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single Touch Bring Up [START] */
-	#if 0
-    mcs8000_ts_input->keybit[BIT_WORD(KEY_BACK)] |= BIT_MASK(KEY_BACK);
-    mcs8000_ts_input->keybit[BIT_WORD(KEY_HOMEPAGE)] |= BIT_MASK(KEY_HOMEPAGE);
-    mcs8000_ts_input->keybit[BIT_WORD(KEY_MENU)] |= BIT_MASK(KEY_MENU);
-#if defined(CONFIG_MACH_MSM7X25A_V3_DS)    
-    mcs8000_ts_input->keybit[BIT_WORD(KEY_SIM_SWITCH)] |= BIT_MASK(KEY_SIM_SWITCH);
-#endif
-	#else
-		mcs8000_ts_input->keybit[BIT_WORD(KEY_BACK)] |= BIT_MASK(KEY_BACK);
-		mcs8000_ts_input->keybit[BIT_WORD(KEY_MENU)] |= BIT_MASK(KEY_MENU);
-#if defined(CONFIG_MACH_MSM7X25A_V3_DS)    
-		mcs8000_ts_input->keybit[BIT_WORD(KEY_HOMEPAGE)] |= BIT_MASK(KEY_HOMEPAGE);
-		mcs8000_ts_input->keybit[BIT_WORD(KEY_SIM_SWITCH)] |= BIT_MASK(KEY_SIM_SWITCH);
-#endif
-	#endif	
-	/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single Touch Bring Up [END] */ 
+	set_bit(INPUT_PROP_DIRECT, mcs8000_ts_input->propbit);
 
-/* 2012-09-25 JongWook-Park(blood9874@lge.com) [V3] Bring up V3 mms-128s touch [END] */ 
+	mcs8000_ts_input->evbit[0] = BIT_MASK(EV_ABS) | BIT_MASK(EV_KEY);
+
+	mcs8000_ts_input->keybit[BIT_WORD(KEY_BACK)] |= BIT_MASK(KEY_BACK);
+	mcs8000_ts_input->keybit[BIT_WORD(KEY_MENU)] |= BIT_MASK(KEY_MENU);
+	mcs8000_ts_input->keybit[BIT_WORD(KEY_HOMEPAGE)] |= BIT_MASK(KEY_HOMEPAGE);
+	mcs8000_ts_input->keybit[BIT_WORD(KEY_SIM_SWITCH)] |= BIT_MASK(KEY_SIM_SWITCH);
 
 	err = input_register_device(mcs8000_ts_input);
 	if (err < 0) {

@@ -201,20 +201,8 @@ struct gpio_i2c_pin {
 
 /*[LGE_BSP_S][yunmo.yang@lge.com] LP5521 RGB Driver*/
 #ifdef CONFIG_LEDS_LP5521
-#if defined (CONFIG_MACH_MSM8X25_V7)
 #define RGB_GPIO_I2C_SCL		57
 #define RGB_GPIO_I2C_SDA		58
-#elif defined(CONFIG_MACH_MSM7X25A_V3_EU)
-/*[2012-12-08][junghoon79.kim@lge.com] k-prj i2c change to 57,58 since rev_1.1 [START]*/
-#if defined(CONFIG_MACH_MSM7X25A_V3EU_REV_11) || defined(CONFIG_MACH_MSM7X25A_V3EU_REV_11_LED)
-#define RGB_GPIO_I2C_SCL		57
-#define RGB_GPIO_I2C_SDA		58
-#else
-#define RGB_GPIO_I2C_SCL		77
-#define RGB_GPIO_I2C_SDA		80
-#endif//ifdef CONFIG_MACH_MSM7X25A_V3EU_REV_11
-/*[2012-12-08][junghoon79.kim@lge.com] k-prj i2c change to 57,58 since rev_1.1 [END]*/
-#endif
 #define RGB_GPIO_RGB_EN 		115
 #define RGB_I2C_ADDRESS			0x32
 #endif

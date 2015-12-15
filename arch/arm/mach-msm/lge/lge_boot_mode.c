@@ -121,7 +121,8 @@ static int update_lge_boot_mode(void)
 // 2012-11-05 Sonchiwon(chiwon.son@lge.com) [V3/V7][Hidden.Menu] HiddenMenu > Settings > Battery > Charging Bypass Boot [END]
 #ifdef CONFIG_LGE_SUPPORT_MINIOS
 	int cable_type = lge_get_cable_info();
-#endif
+
+#endif
 
 // LGE_CHANGE_S, youngbae.choi@lge.com, Because of crash boot, don't check the other reason.
 	if (apps_boot_mode == RESET_REASON_CRASH_NOSOUND) {
@@ -163,7 +164,8 @@ static int update_lge_boot_mode(void)
     else if (factory_cable) {
         printk(KERN_INFO "factory_cable is detected\n");
 	if (test_mode) {
-#ifdef CONFIG_LGE_SUPPORT_MINIOS
+
+#ifdef CONFIG_LGE_SUPPORT_MINIOS
 			if (cable_type == USB_130K) {
 				boot_mode = LGE_BOOT_MODE_MINIOS;
 			} else {

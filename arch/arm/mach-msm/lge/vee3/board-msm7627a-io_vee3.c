@@ -499,19 +499,6 @@ static struct platform_device hs_pdev = {
 	},
 };
  
-/* LGE_CHANGE_S [dajin.kim@lge.com] : V3 Rev.B Key Configuration */
-/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single HOME Key Bring Up [START] */ 
-#if defined(CONFIG_MACH_MSM7X25A_V3_DS)
-static unsigned int keypad_row_gpios[] = {36, 37};
-static unsigned int keypad_col_gpios[] = {33};
-
-#define KEYMAP_INDEX(col, row) ((col)*ARRAY_SIZE(keypad_row_gpios) + (row))
-
-static const unsigned short keypad_keymap_v3[] = {
-	[KEYMAP_INDEX(0, 0)] = KEY_VOLUMEDOWN,
-	[KEYMAP_INDEX(0, 1)] = KEY_VOLUMEUP,
-};
-#else
 static unsigned int keypad_row_gpios[] = {36, 37, 38};
 static unsigned int keypad_col_gpios[] = {33, 32};
 
@@ -522,8 +509,6 @@ static const unsigned short keypad_keymap_v3[] = {
 	[KEYMAP_INDEX(0, 1)] = KEY_VOLUMEUP,
 	[KEYMAP_INDEX(1, 2)] = KEY_HOMEPAGE,
 };
-#endif
-/* 2012-10-23 JongWook-Park(blood9874@lge.com) [V3] Single HOME Key Bring Up [END] */ 
 
 int v3_matrix_info_wrapper(struct gpio_event_input_devs *input_dev,
 			   struct gpio_event_info *info, void **data, int func)
@@ -1097,14 +1082,8 @@ static struct touch_platform_data ts_pdata = {
 
 static struct i2c_board_info ts_i2c_bdinfo[] = {
 	[0] = {
-#if defined(CONFIG_MACH_MSM7X25A_V3BR_REV_B) /*V3 BR OPEN Touch*/
 		I2C_BOARD_INFO("touch_mcs8000", TS_I2C_SLAVE_ADDR),
 		.type = "touch_mcs8000",
-#else /*V3 EU OPEN Touch*/
-		I2C_BOARD_INFO("touch_mcs8000", TS_I2C_SLAVE_ADDR),
-		.type = "touch_mcs8000",
-#endif
-/* LGE_CHANGE_S : RECENT_APPS_KEY (Bell Operator in Canada) */ 
 		.platform_data = &ts_pdata,
 	},
 };

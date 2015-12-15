@@ -418,7 +418,7 @@ static int u0_gpio_earsense_work_func(int *value)
 /*END :: To Block Hook Events for 3 Pole */
 /* LGE_CHANGE_E : 15/03/2012 yoonsoo.kim@lge.com*/
 		} else {
-			printk(KERN_INFO "micorphone was inserted!\n");
+			printk(KERN_INFO "microphone was inserted!\n");
 			*value = SW_MICROPHONE_INSERT;
 /* LGE_CHANGE_S : 15/03/2012 yoonsoo.kim@lge.com*/
 /*Start :: To Block Hook Events for 3 Pole */

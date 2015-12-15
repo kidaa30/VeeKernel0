@@ -1030,7 +1030,7 @@ module_param_call(hiddenmenu_factory_reset, NULL, do_hiddenmenu_frst, NULL, S_IR
 //[LGE_UPDATE_E] 20120215 minwoo.jung
 #endif
 // Begin: hyechan.lee 2011-04-06
-// 0018768: [fota]Fix an issue that when VZW logo is displayed, remove battery it won¡¯t enter recovery mode 
+// 0018768: [fota]Fix an issue that when VZW logo is displayed, remove battery it wont enter recovery mode
 static int fota_write_block(const char *val, struct kernel_param *kp)
 {
 
