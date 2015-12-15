@@ -86,6 +86,13 @@ config LGE_LCD_ESD_DETECTION
 	help
 	 This enables ESD detection of LCD & resets LCD if ESD shock occurs.
 
+config LGE_SUPPORT_MINIOS
+	depends on MACH_LGE
+	default n
+	bool "LGE MiniOS 2.0 Support"
+	help
+	 LGE MiniOS 2.0 Supports
+
 config LGE_UART_MODE
 	bool "Support LGE UART ENABLE DISABLE"
 	default n

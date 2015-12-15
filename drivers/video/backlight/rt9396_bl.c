@@ -402,6 +402,14 @@ printk("[rt9396_sleep] pre intensity:%d !\n", drvdata->intensity);
 			eprintk("Invalid Mode\n");
 			break;
 	}
+#ifdef CONFIG_LGE_SUPPORT_MINIOS
+     if(LGE_BOOT_MODE_MINIOS == get_lge_boot_mode())
+     {
+         gpio_set_value(drvdata->gpio, 1);
+         mdelay(1);
+         gpio_set_value(drvdata->gpio, 0);
+     }
+#endif
 	{
 		if(rt9396_powerstate == NORMAL_STATE){
 			rt9396_powerstate = SLEEP_STATE;
