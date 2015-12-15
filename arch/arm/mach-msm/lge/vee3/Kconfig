@@ -14,6 +14,15 @@ config MACH_MSM7X25A_V3_DS
     help
         Support for the LG Electronics MSM7x25A V3 DualSim.
 
+config MACH_MSM7X25A_V3_WORKAROUD_BUG
+    depends on ARCH_MSM7X27A
+    depends on !MSM_STACKED_MEMORY
+    select MACH_LGE
+    bool "MSM7x25A V3 WorkAround BUG"
+    default y
+    help
+        Workaround for bug of screen still awake after lock.
+
 config LGE_BATTERY_SUSPEND_RESUME
     depends on ARCH_MSM7X27A
     select MACH_LGE
