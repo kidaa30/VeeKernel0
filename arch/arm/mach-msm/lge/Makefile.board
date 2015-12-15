@@ -2,6 +2,12 @@
 # Makefile for the LGE board
 #
 
+# LGE M4 Model
+obj-$(CONFIG_MACH_MSM7X25A_M4) += m4/
+
+# LGE U0 Model
+obj-$(CONFIG_MACH_MSM7X27A_U0) += u0/
+
 # LGE V3 Model
 ifndef CONFIG_MACH_MSM7X25A_M4
 obj-$(CONFIG_MACH_MSM7X25A_V3) += vee3/
@@ -9,9 +15,3 @@ endif
 
 # LGE V7 Model 
 obj-$(CONFIG_MACH_MSM8X25_V7) += vee7/
-
-# LGE U0 Model
-obj-$(CONFIG_MACH_MSM7X27A_U0) += u0/
-
-# LGE M4 Model 
-obj-$(CONFIG_MACH_MSM7X25A_M4) += m4/

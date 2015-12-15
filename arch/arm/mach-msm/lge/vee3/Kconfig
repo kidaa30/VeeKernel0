@@ -9,6 +9,7 @@ config MACH_MSM7X25A_V3
 config MACH_MSM7X25A_V3_DS
     depends on ARCH_MSM7X27A
     depends on !MSM_STACKED_MEMORY
+    depends on MACH_MSM7X25A_V3
     select MACH_LGE
     bool "MSM7x25A V3 DS"
     help
@@ -17,15 +18,9 @@ config MACH_MSM7X25A_V3_DS
 config MACH_MSM7X25A_V3_WORKAROUD_BUG
     depends on ARCH_MSM7X27A
     depends on !MSM_STACKED_MEMORY
+    depends on MACH_MSM7X25A_V3
     select MACH_LGE
     bool "MSM7x25A V3 WorkAround BUG"
     default y
     help
         Workaround for bug of screen still awake after lock.
-
-config LGE_BATTERY_SUSPEND_RESUME
-    depends on ARCH_MSM7X27A
-    select MACH_LGE
-    bool "MSM7x25A V3 Battery Suspend"
-    help
-        Support for the LG Electronics Power.
