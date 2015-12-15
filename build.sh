@@ -69,31 +69,13 @@ unset buildprocesscheck name variant namevariant maindevicecheck BUILDTIME
 # Main Process - Start
 
 maindevice() {
-echo "-${bldred}First Gen${txtrst}-"
-echo "0) L5 NFC            (E610)"
-echo "1) L5 NoNFC          (E612/E617)"
-echo "2) L7 NFC            (P700)"
-echo "3) L7 NoNFC          (P705)"
-echo "4) L7 NFC - 8m       (P708)"
-echo "-${bldblu}Second Gen${txtrst}-"
-echo "5) L1 II Single/Dual (E410/E411/E415/E420)"
-echo "6) L3 II Single/Dual (E425/E430/E431/E435)"
-echo "7) L7 II NFC         (P710/P712)"
-echo "8) L7 II NoNFC       (P713/P714)"
-echo "9) L7 II Dual        (P715/P716)"
+echo "1) L3 II Single (E425/E430/E431)"
+echo "2) L3 II Dual   (E435)"
 unset errorchoice
 read -p "Choice: " -n 1 -s choice
 case "$choice" in
-	0 ) defconfig="cyanogenmod_m4_defconfig"; name="L5"; variant="NFC";;
-	1 ) defconfig="cyanogenmod_m4_nonfc_defconfig"; name="L5"; variant="NoNFC";;
-	2 ) defconfig="cyanogenmod_u0_defconfig"; name="L7"; variant="NFC";;
-	3 ) defconfig="cyanogenmod_u0_nonfc_defconfig"; name="L7"; variant="NoNFC";;
-	4 ) defconfig="cyanogenmod_u0_8m_defconfig"; name="L7"; variant="NFc-8m";;
-	5 ) defconfig="cyanogenmod_v1_defconfig"; name="L1II"; variant="SingleAndDual";;
-	6 ) defconfig="cyanogenmod_vee3_defconfig"; name="L3II"; variant="SingleAndDual";;
-	7 ) defconfig="cyanogenmod_vee7_defconfig"; name="L7II"; variant="NFC";;
-	8 ) defconfig="cyanogenmod_vee7_nonfc_defconfig"; name="L7II"; variant="NFC";;
-	9 ) defconfig="cyanogenmod_vee7ds_defconfig"; name="L7II"; variant="Dual";;
+	1 ) defconfig="veekernel_vee3_defconfig"; name="L3II"; variant="Single";;
+	2 ) defconfig="veekernel_vee3ds_defconfig"; name="L3II"; variant="Dual";;
 	* ) echo "$choice - This option is not valid"; sleep .5; errorchoice="ON";;
 esac
 if ! [ "$errorchoice" == "ON" ]; then
@@ -178,12 +160,8 @@ zippackage() {
 # Variables
 fileupdaterscript="zip-creator/META-INF/com/google/android/updater-script"
 fileupdaterscripttemp="zip-creator/META-INF/com/google/android/updater-script-temp"
-stockname="L5"
-stockvariant="NFC"
+stockvariant="Single"
 
-# Updater-script
-sed "s/$stockname/$name/; s/$stockvariant/$variant/" $fileupdaterscript > $fileupdaterscripttemp
-mv $fileupdaterscripttemp $fileupdaterscript
 # Updater-script - Time
 sed "s/Release/Release ${release} revision ${revision}/" $fileupdaterscript > $fileupdaterscripttemp
 mv $fileupdaterscripttemp $fileupdaterscript
@@ -198,9 +176,6 @@ cd ..
 
 # Updater-script - Time
 sed "s/Release ${release} revision ${revision}/Release/" $fileupdaterscript > $fileupdaterscripttemp
-mv $fileupdaterscripttemp $fileupdaterscript
-# Updater-script
-sed "s/$name/$stockname/; s/$variant/$stockvariant/" $fileupdaterscript > $fileupdaterscripttemp
 mv $fileupdaterscripttemp $fileupdaterscript
 
 zippackagecheck="Done"
@@ -343,10 +318,10 @@ esac
 # The core of script is here!
 
 if [ -e build.sh ]; then
-	customkernel=VeeKernel3
+	customkernel=VeeKernel0
 	export ARCH=arm
-	release=3
-	revision=5
+	release=0
+	revision=1
 	version=R${release}r${revision}
 	zipfile="$customkernel-$name-$variant-$version.zip"
 
